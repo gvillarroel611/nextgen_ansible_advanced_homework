@@ -1,7 +1,4 @@
-- name: Create Homework Assignment project
-
-
-- name: Machine Credentail to connect to workstation using openstack.pub
+- name: Machine Credential to connect to workstation using openstack.pub
   tower_credential:
     name: Connect_to_workstation
     organization: Default
@@ -21,7 +18,6 @@
   command: |
     tower-cli group create --inventory "{{static_inventory_name}}"  --name {{group_name}}
 
-
 - name: Add tower host
   tower_host:
     name: "{{host_name}}"
@@ -37,7 +33,6 @@
   command: | 
     tower-cli host associate --host "{{host_name}}" --group "{{group_name}}"
 
-
 - name: Tower Creds key file
   tower_credential:
     name: "{{ opentlc_cred_name }}"
@@ -49,6 +44,7 @@
     tower_password: r3dh4t1!
     tower_verify_ssl: no
     ssh_key_data: /root/.ssh/mykey.pem
+    ssh_key_unlock: redhat123
     username: "{{ opentlc_login }}"
 
 - name: Remove secret

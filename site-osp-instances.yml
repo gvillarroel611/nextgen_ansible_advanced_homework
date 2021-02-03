@@ -1,6 +1,8 @@
-- hosts: localhost
-  connection: local
-  become: no
-  gather_facts: true
+---
+- name: Manage OpenStack Servers
+  hosts: osworkstation
+  gather_facts: false
+  become: false
+
   roles:
-   - osp-servers
+    - osp-servers

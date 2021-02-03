@@ -1,3 +1,9 @@
 ---
+- name: Provision site in OpenStack workstation
+  command: ansible-playbook -u cloud-user /home/cloud-user/ansible_advanced_openstack_infra/site.yml -i /home/cloud-user/ansible_advanced_openstack_infra/inventory/control
+  become: yes
+  become_user: cloud-user
+  register: output
 
-# tasks file for osp.servers
+- debug:
+    var: output

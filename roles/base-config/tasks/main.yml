@@ -9,6 +9,35 @@
     backup: yes
 
 - name: enable repos
+  yum_repository:
+    name: internal
+    description: Ansible bootcamp repo
+    baseurl: http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
  
 - name: install base tools and packages
+  block:
+  tags: base-config
+    - name: Install Postgres packages
+      package:
+        name: "{{ __package }}"
+        state: present
+      loop: 
+        - "{{ postgres_rhel7_repo }}"        
+        - "{{ postgres_packages }}"
+        - "{{ postgres_library }}"
+      loop_control:
+        loop_var: __package
+      tags: dbs
+
+    - name: Install flask packages
+      package:
+        name: "{{ app_yum_packages }}"
+        state: present
+      tags: apps
+
+    - name: Install load balancer packages
+      package:
+        name: "{{ load_balancer_packages }}"
+        state: present
+      tags: lbs
 

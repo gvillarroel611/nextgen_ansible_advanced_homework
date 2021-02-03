@@ -1,8 +1,13 @@
 - hosts: workstation
   gather_facts: false
   tasks:
-  - name: OpenStack servers
+#  - name: OpenStack servers
   - name: Curl website
+    command: curl /frontend1/api/v1/ping
+    register: results
+
+  - debug:
+      var: results
 
   - name: Fail if 'Ansible has done its job' is not in the page content
     fail:
