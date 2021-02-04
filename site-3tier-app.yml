@@ -6,7 +6,8 @@
 # Setup front-end load balancer tier
 
 - name: setup load-balancer tier
-  hosts: frontends
+  #hosts: frontends
+  hosts: load_balancers
   become: yes
   roles:
     - {name: base-config, tags: [base-config, lbs]}
@@ -15,7 +16,8 @@
 # Setup application servers tier
 
 - name: setup app tier
-  hosts: apps
+  #hosts: apps
+  hosts: app_servers
   become: yes
   gather_facts: false
   roles:
@@ -25,8 +27,9 @@
 # Setup database tier
 
 - name: setup database tier
+  hosts: database_servers
   become: yes
-  hosts: appdbs
+  #hosts: appdbs
   roles:
     - {name: base-config, tags: [base-config, dbs]}
     - {name: db-tier, tags: [dbs, postgres]}
