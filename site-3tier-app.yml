@@ -11,8 +11,10 @@
   gather_facts: false
 
   roles:
-    - {role: base-config, tags: ["base-config", "lbs"]}
-    - {role: lb-tier, tags: ["lbs", "haproxy"]}
+    - role: base-config
+      vars:
+        setup_role: "lbs"
+    - role: lb-tier
 
 # Setup application servers tier
 
@@ -22,8 +24,10 @@
   gather_facts: false
 
   roles:
-    - {role: base-config, tags: ["base-config", "apps"]}
-    - {role: app-tier, tags: ["apps", "tomcat"]}
+    - role: base-config
+      vars: 
+        setup_role: "apps"
+    - role: app-tier
 
 # Setup database tier
 
@@ -33,5 +37,8 @@
   gather_facts: false
 
   roles:
-    - {role: base-config, tags: ["base-config", "dbs"]}
-    - {role: db-tier, tags: ["dbs", "postgres"]}
+    - role: base-config
+      vars:
+         setup_role: "dbs"
+    - role: db-tier
+

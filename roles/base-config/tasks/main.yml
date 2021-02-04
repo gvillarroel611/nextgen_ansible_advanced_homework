@@ -1,23 +1,22 @@
 ---
 # Initial, common, system setup steps
-- name: enable sudo without tty for some ansible commands
+- name: Enable sudo without tty for some ansible commands
   replace:
     path: /etc/sudoers
     regexp: '^Defaults\s*requiretty'
     replace: 'Defaults  !requiretty'
     backup: yes
 
-- name: enable repos
+- name: Enable repos
   yum_repository:
     name: internal
     description: Ansible bootcamp repo
     baseurl: http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
 
 - name: Include database tier role
-  include_role:
+  import_role:
     name: db-tier
-  tags:
-    - dbs
+  when: setup_role == "dbs"
  
 - name: Install Postgres packages for database tier
   package:
@@ -29,32 +28,27 @@
     - "{{ postgres_library }}"
   loop_control:
     loop_var: __package
-  tags:
-    - dbs
+  when: setup_role == "dbs"
 
 - name: Include app tier role
-  include_role:
+  import_role:
     name: app-tier
-  tags:
-    - apps
+  when: setup_role == "apps"
 
 - name: Install flask packages for app tier
   package:
     name: "{{ app_yum_packages }}"
     state: present
-  tags:
-    - apps
+  when: setup_role == "apps"
 
 - name: Include load balancer tier role
-  include_role:
+  import_role:
     name: lb-tier
-  tags:
-    - lbs
+  when: setup_role == "lbs"
 
 - name: Install load balancer packages for load balancer tier
   package:
     name: "{{ load_balancer_packages }}"
     state: present
-  tags:
-    - lbs
+  when: setup_role == "lbs"
 
