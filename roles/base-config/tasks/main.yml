@@ -7,12 +7,12 @@
     replace: 'Defaults  !requiretty'
     backup: yes
 
-#- name: Enable repos
-#  yum_repository:
-#    name: internal
-#    description: Ansible bootcamp repo
-#    file: internal
-#    baseurl: http://www.opentlc.com/download/ansible_bootcamp/repo/
+- name: Enable repos
+  yum_repository:
+    name: internal
+    description: Ansible bootcamp repo
+    file: internal
+    baseurl: http://www.opentlc.com/download/ansible_bootcamp/repo/
 
 - name: Install Postgres packages for database tier
   package:
