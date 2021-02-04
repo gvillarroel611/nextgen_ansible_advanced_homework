@@ -11,7 +11,8 @@
   yum_repository:
     name: internal
     description: Ansible bootcamp repo
-    baseurl: http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
+    file: internal
+    baseurl: http://www.opentlc.com/download/ansible_bootcamp/repo/
 
 - name: Install Postgres packages for database tier
   package:
