@@ -13,11 +13,6 @@
     description: Ansible bootcamp repo
     baseurl: http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
 
-- name: Include database tier role
-  import_role:
-    name: db-tier
-  when: setup_role == "dbs"
- 
 - name: Install Postgres packages for database tier
   package:
     name: "{{ __package }}"
@@ -30,21 +25,11 @@
     loop_var: __package
   when: setup_role == "dbs"
 
-- name: Include app tier role
-  import_role:
-    name: app-tier
-  when: setup_role == "apps"
-
 - name: Install flask packages for app tier
   package:
     name: "{{ app_yum_packages }}"
     state: present
   when: setup_role == "apps"
-
-- name: Include load balancer tier role
-  import_role:
-    name: lb-tier
-  when: setup_role == "lbs"
 
 - name: Install load balancer packages for load balancer tier
   package:
