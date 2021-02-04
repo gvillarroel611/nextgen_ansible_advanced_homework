@@ -6,9 +6,12 @@
 # Setup front-end load balancer tier
 
 - name: setup load-balancer tier
-  #hosts: frontends
   hosts: load_balancers
-  become: yes
+  become: true
+  gather_facts: false
+  tags:
+    - load_balancers
+
   roles:
     - {name: base-config, tags: [base-config, lbs]}
     - {name: lb-tier, tags: [lbs, haproxy]}
@@ -16,10 +19,12 @@
 # Setup application servers tier
 
 - name: setup app tier
-  #hosts: apps
   hosts: app_servers
-  become: yes
+  become: true
   gather_facts: false
+  tags:
+    - app_servers
+
   roles:
     - {name: base-config, tags: [base-config, apps]}
     - {name: app-tier, tags: [apps, tomcat]}
@@ -28,8 +33,11 @@
 
 - name: setup database tier
   hosts: database_servers
-  become: yes
-  #hosts: appdbs
+  become: true
+  gather_facts: false
+  tags:
+    - database_servers
+
   roles:
     - {name: base-config, tags: [base-config, dbs]}
     - {name: db-tier, tags: [dbs, postgres]}
